@@ -1,17 +1,15 @@
-import { View, Text, StyleSheet } from "react-native";
+import { ScrollView, Text, StyleSheet } from "react-native";
 import React from "react";
 
 export default function Player() {
     return (
-        <View style={styles.container}>
+        <ScrollView style={styles.container}>
             <Text>Player</Text>
-        </View>
+        </ScrollView>
     );
 }
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
     },
 });

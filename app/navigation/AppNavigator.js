@@ -12,7 +12,7 @@ export default function AppNavigator() {
     return (
         <Tab.Navigator>
             <Tab.Screen
-                name="AudioList"
+                name="Audio List"
                 component={AudioList}
                 options={{
                     tabBarIcon: () => (

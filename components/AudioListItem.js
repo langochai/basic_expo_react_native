@@ -1,29 +1,40 @@
-import { View, Text, StyleSheet, Dimensions } from "react-native";
+import {
+    View,
+    Text,
+    StyleSheet,
+    Dimensions,
+    TouchableWithoutFeedback,
+} from "react-native";
 import React from "react";
 import { Entypo } from "@expo/vector-icons";
 import color from "../app/misc/color";
 
-export default function AudioListItem({ title, duration, onOptionPress }) {
+export default function AudioListItem({ title, duration, onOptionPress,onAudioPress }) {
     return (
         <>
             <View style={styles.container}>
-                <View style={styles.left}>
-                    <View style={styles.thumbnail}>
-                        <Text style={styles.thumbnailText}>{title[0]}</Text>
+                <TouchableWithoutFeedback onPress={onAudioPress}>
+                    <View style={styles.left}>
+                        <View style={styles.thumbnail}>
+                            <Text style={styles.thumbnailText}>{title[0]}</Text>
+                        </View>
+                        <View style={styles.titleContainer}>
+                            <Text style={styles.title} numberOfLines={1}>
+                                {title}
+                            </Text>
+                            <Text style={styles.duration}>
+                                {convertTime(duration)}
+                            </Text>
+                        </View>
                     </View>
-                    <View style={styles.titleContainer}>
-                        <Text style={styles.title} numberOfLines={1}>
-                            {title}
-                        </Text>
-                        <Text style={styles.duration}>{convertTime(duration)}</Text>
-                    </View>
-                </View>
+                </TouchableWithoutFeedback>
                 <View style={styles.right}>
                     <Entypo
                         onPress={onOptionPress}
                         name="dots-three-vertical"
                         size={20}
                         color={color.FONT_MEDIUM}
+                        style={{ padding: 10 }}
                     />
                 </View>
             </View>
@@ -37,10 +48,15 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignSelf: "center",
         width: width - 80,
-        paddingTop:5
+        paddingTop: 5,
     },
     left: { flexDirection: "row", alignItems: "center", flex: 1 },
-    right: { flexBasis: 50, height: 50, alignItems: "center", justifyContent:'center' },
+    right: {
+        flexBasis: 50,
+        height: 50,
+        alignItems: "center",
+        justifyContent: "center",
+    },
     thumbnail: {
         height: 50,
         backgroundColor: color.FONT_LIGHT,
@@ -73,26 +89,25 @@ const styles = StyleSheet.create({
     },
 });
 
-
-const convertTime = minutes => {
+const convertTime = (minutes) => {
     if (minutes) {
-      const hrs = minutes / 60;
-      const minute = hrs.toString().split('.')[0];
-      const percent = parseInt(hrs.toString().split('.')[1].slice(0, 2));
-      const sec = Math.ceil((60 * percent) / 100);
-  
-      if (parseInt(minute) < 10 && sec < 10) {
-        return `0${minute}:0${sec}`;
-      }
-  
-      if (parseInt(minute) < 10) {
-        return `0${minute}:${sec}`;
-      }
-  
-      if (sec < 10) {
-        return `${minute}:0${sec}`;
-      }
-  
-      return `${minute}:${sec}`;
+        const hrs = minutes / 60;
+        const minute = hrs.toString().split(".")[0];
+        const percent = parseInt(hrs.toString().split(".")[1].slice(0, 2));
+        const sec = Math.ceil((60 * percent) / 100);
+
+        if (parseInt(minute) < 10 && sec < 10) {
+            return `0${minute}:0${sec}`;
+        }
+
+        if (parseInt(minute) < 10) {
+            return `0${minute}:${sec}`;
+        }
+
+        if (sec < 10) {
+            return `${minute}:0${sec}`;
+        }
+
+        return `${minute}:${sec}`;
     }
-  };
+};
